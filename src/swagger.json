@@ -1,0 +1,148 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Node Test Project",
+		"description": "Node Test Project for Tiegan",
+		"license": {
+			"name": "MIT",
+			"url": "https://opensource.org/licenses/MIT"
+		}
+	},
+	"servers": [
+		{
+			"url": "/",
+			"description": ""
+		}
+	],
+	"tags": [
+		{
+			"name": "Trm",
+			"description": "API for Trm"
+		}
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/trm": {
+			"get": {
+				"tags": [
+					"Trm"
+				],
+				"summary": "Get all trms in system",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "integer"
+						},
+						"description": "The number of items to skip before starting to collect the result set",
+						"example": 1
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"schema": {
+							"type": "integer"
+						},
+						"description": "The numbers of items to return",
+						"example": 15
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Trm"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Trm"
+				],
+				"summary": "Retrieve & insert currency rate information from https://transferwise.com/gb/currency-converter/api/historic",
+				"requestBody": {
+					"description": "Source & Target Currency",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"source": {
+										"type": "string"
+									},
+									"target": {
+										"type": "string"
+									}
+								}
+							},
+							"examples": {
+								"USD to UYU": {
+									"value": {
+										"source": "USD",
+										"target": "UYU"
+									}
+								},
+								"USD to EUR": {
+									"value": {
+										"source": "USD",
+										"target": "EUR"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Trm"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Trm"
+				],
+				"summary": "Delete all trms in system",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Trm"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Trm": {
+			"type": "object",
+			"properties": {
+				"source": {
+					"type": "string"
+				},
+				"target": {
+					"type": "string"
+				},
+				"rate": {
+					"type": "number"
+				},
+				"time": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
